@@ -1,0 +1,4 @@
+interface:
+  display_name: "Formatting Commit"
+  short_description: "Conventional Commits with the house rules"
+  default_prompt: "Use $formatting-commit to commit the staged changes."

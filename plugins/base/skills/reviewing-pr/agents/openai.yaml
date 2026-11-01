@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reviewing PR"
+  short_description: "Review a PR and close with a verdict block"
+  default_prompt: "Use $reviewing-pr to review this pull request and give the verdict."

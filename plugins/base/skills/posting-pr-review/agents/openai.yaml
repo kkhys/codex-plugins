@@ -1,0 +1,4 @@
+interface:
+  display_name: "Posting PR Review"
+  short_description: "Post findings as a PENDING GitHub review"
+  default_prompt: "Use $posting-pr-review to post the review findings to the PR as a pending review."

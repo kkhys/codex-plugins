@@ -1,0 +1,4 @@
+interface:
+  display_name: "Creating PR"
+  short_description: "Draft PR with the house title and body rules"
+  default_prompt: "Use $creating-pr to open a draft pull request for this branch."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reading Unresolved PR Comments"
+  short_description: "List unresolved review threads with a fix plan"
+  default_prompt: "Use $reading-unresolved-pr-comments to show the open review threads on this PR."

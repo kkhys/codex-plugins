@@ -1,7 +1,7 @@
 {
   "name": "base",
-  "version": "0.1.0",
-  "description": "Personal development workflow for Codex: skills, hooks, and MCP servers",
+  "version": "0.2.0",
+  "description": "Personal git workflow for Codex: commit conventions, branch naming, draft PRs, PR review with a fixed verdict, and review-comment handling",
   "interface": {
     "displayName": "Base",
     "shortDescription": "Personal development workflow",

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Resolving PR Comments"
+  short_description: "Resolve review threads on the current PR"
+  default_prompt: "Use $resolving-pr-comments to resolve the review threads we handled."
