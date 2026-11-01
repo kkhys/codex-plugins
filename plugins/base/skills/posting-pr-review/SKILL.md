@@ -69,7 +69,7 @@ Verify that each line falls within `gh pr diff`. The GitHub API rejects comments
 Write the payload JSON and pass it to the script:
 
 ```bash
-scripts/post-pr-review.sh /path/to/payload.json
+bash scripts/post-pr-review.sh /path/to/payload.json
 ```
 
 ```json

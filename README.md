@@ -15,6 +15,8 @@ codex plugin marketplace add kkhys/codex-plugins
 codex plugin add base@codex-plugins
 ```
 
+Skills are invoked as `$base:<name>`, for example `$base:creating-pr`; Codex also picks the implicit ones up from their descriptions.
+
 Codex refreshes git marketplaces at launch and caches each plugin by version under `~/.codex/plugins/cache/codex-plugins/<plugin>/<version>/`, so bump `version` in `plugins/base/.codex-plugin/plugin.json` with every change.
 
 ## Development

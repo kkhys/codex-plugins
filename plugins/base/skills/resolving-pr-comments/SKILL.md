@@ -16,13 +16,13 @@ Resolving a thread tells the reviewer their point was handled; resolving one tha
 Specific threads — the IDs from `$reading-unresolved-pr-comments`; works from anywhere, since thread IDs are globally unique:
 
 ```bash
-scripts/resolve-pr-comments.sh PRRT_kwDOAbc123 PRRT_kwDOAbc456
+bash scripts/resolve-pr-comments.sh PRRT_kwDOAbc123 PRRT_kwDOAbc456
 ```
 
 Every unresolved thread on the current branch's PR (the current directory must be a git repo whose branch has an open PR):
 
 ```bash
-scripts/resolve-pr-comments.sh
+bash scripts/resolve-pr-comments.sh
 ```
 
 ## After Running

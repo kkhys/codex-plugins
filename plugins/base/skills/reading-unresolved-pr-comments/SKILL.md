@@ -10,7 +10,7 @@ Paths below are relative to this skill's directory. The current branch must have
 ## Fetch
 
 ```bash
-scripts/read-unresolved-pr-comments.sh
+bash scripts/read-unresolved-pr-comments.sh
 ```
 
 Returns JSON with the PR metadata and every unresolved thread: `thread_id`, `path`, `line`, `start_line`, `is_outdated`, and the comments. Comments on a reviewer's unsubmitted PENDING review are already filtered out.

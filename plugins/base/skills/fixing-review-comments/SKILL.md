@@ -45,7 +45,7 @@ COMMIT_URL="$(gh api "repos/$(gh repo view --json nameWithOwner -q '.nameWithOwn
 Post all replies at once:
 
 ```bash
-scripts/reply-to-review-threads.sh /path/to/replies.json
+bash scripts/reply-to-review-threads.sh /path/to/replies.json
 ```
 
 ```json
