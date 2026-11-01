@@ -5,6 +5,8 @@ description: 'Open a GitHub pull request with this user''s conventions — title
 
 # Creating PR
 
+`gh` and `git push`/`fetch` need the network: when sandboxed, run them with escalation.
+
 Start from `git branch --show-current`, `git status --short`, and `git log --oneline -15`. Uncommitted changes are not part of a PR: commit them first (`$formatting-commit`, or `$splitting-commit` when they mix concerns) or ask.
 
 ## Base Branch

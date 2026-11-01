@@ -5,7 +5,7 @@ description: Fetch the current PR's unresolved review threads — thread IDs, ou
 
 # Read Unresolved PR Comments
 
-Paths below are relative to this skill's directory. The current branch must have an open PR.
+Paths below are relative to this skill's directory. `gh` and `git push`/`fetch` need the network: when sandboxed, run them with escalation. The current branch must have an open PR.
 
 ## Fetch
 

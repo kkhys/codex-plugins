@@ -1,7 +1,7 @@
 {
   "name": "base",
-  "version": "0.2.0",
-  "description": "Personal git workflow for Codex: commit conventions, branch naming, draft PRs, PR review with a fixed verdict, and review-comment handling",
+  "version": "0.2.1",
+  "description": "Personal development workflow for Codex: commit and PR conventions, stacked PRs, PR review and babysitting, CI diagnosis, Renovate merging, and writing and explaining aids",
   "interface": {
     "displayName": "Base",
     "shortDescription": "Personal development workflow",

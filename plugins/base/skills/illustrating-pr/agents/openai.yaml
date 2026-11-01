@@ -1,0 +1,6 @@
+interface:
+  display_name: "Illustrating PR"
+  short_description: "Draw a PR as one picture and attach it"
+  default_prompt: "Use $illustrating-pr to draw this pull request and put the picture in its description."
+policy:
+  allow_implicit_invocation: false

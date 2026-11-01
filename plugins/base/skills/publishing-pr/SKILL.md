@@ -5,6 +5,8 @@ description: Publish the current work end to end — branch, logical commits, dr
 
 # Publish Workflow
 
+`gh` and `git push`/`fetch` need the network: when sandboxed, run them with escalation.
+
 Carry the working tree from uncommitted changes to an open draft PR.
 
 If `git status --short` is empty and `git log --oneline @{upstream}..HEAD` shows nothing (or the branch has no upstream and no commits beyond `origin/main`), report that there is nothing to publish and stop.

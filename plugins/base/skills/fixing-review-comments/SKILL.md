@@ -5,7 +5,7 @@ description: Address the unresolved review comments on a pull request end to end
 
 # Fix Review Comments
 
-Paths below are relative to this skill's directory.
+Paths below are relative to this skill's directory. `gh` and `git push`/`fetch` need the network: when sandboxed, run them with escalation.
 
 ## Target
 

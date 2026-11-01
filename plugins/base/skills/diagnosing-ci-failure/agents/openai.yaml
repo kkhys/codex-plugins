@@ -1,0 +1,4 @@
+interface:
+  display_name: "Diagnosing CI Failure"
+  short_description: "Find why a CI run failed and fix or rerun it"
+  default_prompt: "Use $diagnosing-ci-failure to find out why this CI run failed and fix it."

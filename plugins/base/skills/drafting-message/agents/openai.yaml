@@ -1,0 +1,4 @@
+interface:
+  display_name: "Drafting Message"
+  short_description: "Draft a short Japanese message to post yourself"
+  default_prompt: "Use $drafting-message to draft a Slack reply for me to post."

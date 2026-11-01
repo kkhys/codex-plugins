@@ -1,0 +1,6 @@
+interface:
+  display_name: "Creating Handoff"
+  short_description: "Compact this session into a handoff document"
+  default_prompt: "Use $creating-handoff to write a handoff so a fresh session can continue this work."
+policy:
+  allow_implicit_invocation: false

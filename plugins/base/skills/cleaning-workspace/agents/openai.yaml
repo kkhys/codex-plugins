@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cleaning Workspace"
+  short_description: "Delete local branches except protected ones"
+  default_prompt: "Use $cleaning-workspace to delete the stale local branches of this repository."
+policy:
+  allow_implicit_invocation: false

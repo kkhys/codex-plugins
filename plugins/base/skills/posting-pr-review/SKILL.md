@@ -5,7 +5,7 @@ description: Post review findings to a GitHub pull request as a PENDING review t
 
 # Post PR Review as PENDING
 
-Paths below are relative to this skill's directory.
+Paths below are relative to this skill's directory. `gh` and `git push`/`fetch` need the network: when sandboxed, run them with escalation.
 
 The review is always created in PENDING state — never APPROVE or REQUEST_CHANGES — so the user can review and edit the comments on GitHub before the PR author is notified.
 
