@@ -17,7 +17,7 @@ codex plugin add base@codex-plugins
 
 Skills are invoked as `$base:<name>`, for example `$base:creating-pr`; Codex also picks the implicit ones up from their descriptions.
 
-Codex refreshes git marketplaces at launch and caches each plugin by version under `~/.codex/plugins/cache/codex-plugins/<plugin>/<version>/`, so bump `version` in `plugins/base/.codex-plugin/plugin.json` with every change.
+Codex refreshes git marketplaces at launch and caches each plugin by version under `~/.codex/plugins/cache/codex-plugins/<plugin>/<version>/`, so bump the patch number of `version` in `plugins/base/.codex-plugin/plugin.json` with every change (`0.2.0` → `0.2.1`); the major and minor numbers do not move.
 
 ## Development
 
