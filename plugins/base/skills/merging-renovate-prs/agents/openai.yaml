@@ -1,0 +1,4 @@
+interface:
+  display_name: "Merging Renovate PRs"
+  short_description: "Merge the open Renovate PRs of a kkhys repository"
+  default_prompt: "Use $merging-renovate-prs to merge the open Renovate PRs of this repository."

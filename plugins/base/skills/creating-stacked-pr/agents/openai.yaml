@@ -1,0 +1,4 @@
+interface:
+  display_name: "Creating Stacked PR"
+  short_description: "Decide on, design, and build a stack of PRs"
+  default_prompt: "Use $creating-stacked-pr to decide whether this task needs a stack of PRs and build it."

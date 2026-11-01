@@ -1,0 +1,6 @@
+interface:
+  display_name: "Digging"
+  short_description: "Interrogate a plan one question at a time"
+  default_prompt: "Use $digging to question this plan until we share one picture of it."
+policy:
+  allow_implicit_invocation: false

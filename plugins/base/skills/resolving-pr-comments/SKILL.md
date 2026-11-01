@@ -5,11 +5,11 @@ description: Resolve review threads on the current PR through scripts/resolve-pr
 
 # Resolve PR Comments
 
-Paths below are relative to this skill's directory.
+Paths below are relative to this skill's directory. `gh` and `git push`/`fetch` need the network: when sandboxed, run them with escalation.
 
 ## Before Running
 
-Resolving a thread tells the reviewer their point was handled; resolving one that was not forces them to reopen it. Show how many threads will be resolved and wait for the user's go-ahead. Prefer the explicit form whenever the handled threads are known: a bulk resolve also closes threads that arrived while you were working, or ones deliberately left open pending a decision.
+Resolving a thread tells the reviewer their point was handled; resolving one that was not forces them to reopen it. Show how many threads will be resolved and wait for the user's go-ahead. Prefer the explicit form whenever the handled threads are known: a bulk resolve also closes threads that arrived while you were working, or ones deliberately left open pending a decision. `$babysitting-pr` is the one caller that runs the explicit form for the threads it addressed without asking first — an addressed thread left open would keep its terminal condition out of reach.
 
 ## Run
 

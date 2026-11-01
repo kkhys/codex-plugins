@@ -6,7 +6,7 @@
 
 | Plugin | Description |
 |---|---|
-| `base` | Git workflow skills: `formatting-commit`, `splitting-commit`, `creating-branch-name`, `publishing-pr` (explicit only), `creating-pr`, `reviewing-pr`, `posting-pr-review`, `reading-unresolved-pr-comments`, `fixing-review-comments`, `resolving-pr-comments` |
+| `base` | Git and PR workflow: `formatting-commit`, `splitting-commit`, `creating-branch-name`, `publishing-pr`, `creating-pr`, `creating-stacked-pr`, `resolving-merge-conflicts`, `cleaning-workspace`, `illustrating-pr`. Review: `reviewing-pr`, `posting-pr-review`, `reading-unresolved-pr-comments`, `fixing-review-comments`, `resolving-pr-comments`, `babysitting-pr`, `diagnosing-ci-failure`, `merging-renovate-prs`. Working aids: `writing-for-agents`, `diagnosing-bugs`, `digging`, `creating-handoff`, `drafting-message`, `eli15`, `explaining-like-doraemon`. Explicit-only (`$base:<name>`): `publishing-pr`, `illustrating-pr`, `cleaning-workspace`, `diagnosing-bugs`, `digging`, `creating-handoff`, `eli15`, `explaining-like-doraemon` |
 
 ## Installation
 
@@ -27,11 +27,12 @@ find plugins -name '*.sh' -print0 | xargs -0 -r shellcheck
 
 bash plugins/base/skills/reading-unresolved-pr-comments/scripts/test-read-unresolved-pr-comments.sh
 bash plugins/base/skills/fixing-review-comments/scripts/test-reply-to-review-threads.sh
+bash plugins/base/skills/babysitting-pr/scripts/test-pr-watch.sh
 ```
 
 The same checks run in CI via `.github/workflows/validate.yml`.
 
-Some `base` skills are adapted from [openai/codex](https://github.com/openai/codex) (Apache-2.0) and [dietrichgebert/ponytail](https://github.com/dietrichgebert/ponytail) (MIT) — see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+Some `base` skills are adapted from [openai/codex](https://github.com/openai/codex) (Apache-2.0), [mattpocock/skills](https://github.com/mattpocock/skills) (MIT), [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) (Apache-2.0), and [dietrichgebert/ponytail](https://github.com/dietrichgebert/ponytail) (MIT) — see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
 See [AGENTS.md](./AGENTS.md) for the repository layout and conventions.
 

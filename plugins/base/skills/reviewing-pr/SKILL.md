@@ -22,7 +22,7 @@ verdict block covers the series; each finding names its PR number.
 
 ## Review
 
-Paths below are relative to this skill's directory.
+Paths below are relative to this skill's directory. `gh` and `git push`/`fetch` need the network: when sandboxed, run them with escalation.
 
 `gh pr diff <number>` gives the change; check the branch out (or open a
 worktree) when callers and tests need reading.

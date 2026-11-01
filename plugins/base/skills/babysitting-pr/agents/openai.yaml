@@ -1,0 +1,4 @@
+interface:
+  display_name: "Babysitting PR"
+  short_description: "Watch a PR until it is mergeable, fixing CI and reviews"
+  default_prompt: "Use $babysitting-pr to watch this PR until it is mergeable."

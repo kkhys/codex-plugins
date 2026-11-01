@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing for Agents"
+  short_description: "Levers for documents an agent consumes"
+  default_prompt: "Use $writing-for-agents to audit this SKILL.md against the levers and propose edits."

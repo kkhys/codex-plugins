@@ -1,0 +1,6 @@
+interface:
+  display_name: "Eli15"
+  short_description: "One-page HTML picture explainer for a teenager"
+  default_prompt: "Use $eli15 to explain this topic from zero as a picture page."
+policy:
+  allow_implicit_invocation: false

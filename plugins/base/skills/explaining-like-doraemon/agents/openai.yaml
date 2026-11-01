@@ -1,0 +1,6 @@
+interface:
+  display_name: "Explaining Like Doraemon"
+  short_description: "Re-explain an answer as a Doraemon dialogue"
+  default_prompt: "Use $explaining-like-doraemon to re-explain the previous answer."
+policy:
+  allow_implicit_invocation: false

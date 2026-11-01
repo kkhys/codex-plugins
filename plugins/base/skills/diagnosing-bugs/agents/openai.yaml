@@ -1,0 +1,6 @@
+interface:
+  display_name: "Diagnosing Bugs"
+  short_description: "Six-phase discipline for a hard bug"
+  default_prompt: "Use $diagnosing-bugs to find and fix the cause of this bug."
+policy:
+  allow_implicit_invocation: false

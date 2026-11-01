@@ -1,0 +1,4 @@
+interface:
+  display_name: "Resolving Merge Conflicts"
+  short_description: "Resolve a merge or rebase conflict by intent"
+  default_prompt: "Use $resolving-merge-conflicts to finish the conflicted merge on this branch."
