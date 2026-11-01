@@ -1,0 +1,11 @@
+{
+  "name": "base",
+  "version": "0.1.0",
+  "description": "Personal development workflow for Codex: skills, hooks, and MCP servers",
+  "interface": {
+    "displayName": "Base",
+    "shortDescription": "Personal development workflow",
+    "developerName": "Keisuke Hayashi",
+    "category": "Developer Tools"
+  }
+}

@@ -1,0 +1,30 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  manifests:
+    name: Validate manifests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check marketplace and plugin manifests
+        run: python3 scripts/validate-manifests.py
+
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # find, not a glob: covers every plugin and nested dirs like scripts/lib
+      - name: Run ShellCheck
+        run: |
+          find plugins -name '*.sh' -print0 | xargs -0 -r shellcheck

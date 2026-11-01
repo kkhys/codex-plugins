@@ -1,0 +1,16 @@
+{
+  "name": "codex-plugins",
+  "interface": {
+    "displayName": "kkhys"
+  },
+  "plugins": [
+    {
+      "name": "base",
+      "source": {
+        "source": "local",
+        "path": "./plugins/base"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
