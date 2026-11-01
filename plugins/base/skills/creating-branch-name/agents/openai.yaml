@@ -1,0 +1,4 @@
+interface:
+  display_name: "Creating Branch Name"
+  short_description: "Name and create a branch from the changes"
+  default_prompt: "Use $creating-branch-name to move the current changes onto a well-named branch."

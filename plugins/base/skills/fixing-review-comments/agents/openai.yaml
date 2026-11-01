@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fixing Review Comments"
+  short_description: "Fix PR review feedback and reply in threads"
+  default_prompt: "Use $fixing-review-comments to address the open review comments on this PR."

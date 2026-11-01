@@ -1,0 +1,6 @@
+interface:
+  display_name: "Publishing PR"
+  short_description: "Branch, split commits, open a draft PR"
+  default_prompt: "Use $publishing-pr to publish the current changes as a draft pull request."
+policy:
+  allow_implicit_invocation: false

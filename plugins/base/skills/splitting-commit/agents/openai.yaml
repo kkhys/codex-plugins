@@ -1,0 +1,4 @@
+interface:
+  display_name: "Splitting Commit"
+  short_description: "Split mixed changes into focused commits"
+  default_prompt: "Use $splitting-commit to organize the uncommitted changes into logical commits."

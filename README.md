@@ -6,7 +6,7 @@
 
 | Plugin | Description |
 |---|---|
-| `base` | Personal development workflow for Codex: skills, hooks, and MCP servers. Empty for now; skills are added one at a time |
+| `base` | Git workflow skills: `formatting-commit`, `splitting-commit`, `creating-branch-name`, `publishing-pr` (explicit only), `creating-pr`, `reviewing-pr`, `posting-pr-review`, `reading-unresolved-pr-comments`, `fixing-review-comments`, `resolving-pr-comments` |
 
 ## Installation
 
@@ -22,9 +22,14 @@ Codex refreshes git marketplaces at launch and caches each plugin by version und
 ```shell
 python3 scripts/validate-manifests.py
 find plugins -name '*.sh' -print0 | xargs -0 -r shellcheck
+
+bash plugins/base/skills/reading-unresolved-pr-comments/scripts/test-read-unresolved-pr-comments.sh
+bash plugins/base/skills/fixing-review-comments/scripts/test-reply-to-review-threads.sh
 ```
 
 The same checks run in CI via `.github/workflows/validate.yml`.
+
+Some `base` skills are adapted from [dietrichgebert/ponytail](https://github.com/dietrichgebert/ponytail) (MIT) — see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
 See [AGENTS.md](./AGENTS.md) for the repository layout and conventions.
 
