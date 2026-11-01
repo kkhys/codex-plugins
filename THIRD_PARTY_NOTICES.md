@@ -3,6 +3,31 @@
 Skills in this marketplace that are ported or adapted from other projects, with
 their licenses. Each entry lists the upstream source and the derived files here.
 
+## openai/codex
+
+- Source: https://github.com/openai/codex (tag `rust-v0.166.0`), the bundled system skill `review-agent` (`codex-rs` resources, installed as `$CODEX_HOME/skills/.system/review-agent/SKILL.md`)
+- License: Apache-2.0 — Copyright 2025 OpenAI
+- Derived file (modified from the original):
+  - `plugins/base/skills/reviewing-pr/references/review-pass.md` — the read-only declaration, the merge-base comparison, the five conditions a finding must meet, and the `[P1] title — path:line` / P0–P3 / `No findings.` output form are from `review-agent/SKILL.md`; the lenses are this project's own
+
+The Apache-2.0 boilerplate notice that upstream applies to its sources:
+
+```
+Copyright 2025 OpenAI
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+
 ## dietrichgebert/ponytail
 
 - Source: https://github.com/dietrichgebert/ponytail (commit `96608e0`)

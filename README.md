@@ -31,7 +31,7 @@ bash plugins/base/skills/fixing-review-comments/scripts/test-reply-to-review-thr
 
 The same checks run in CI via `.github/workflows/validate.yml`.
 
-Some `base` skills are adapted from [dietrichgebert/ponytail](https://github.com/dietrichgebert/ponytail) (MIT) — see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+Some `base` skills are adapted from [openai/codex](https://github.com/openai/codex) (Apache-2.0) and [dietrichgebert/ponytail](https://github.com/dietrichgebert/ponytail) (MIT) — see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
 See [AGENTS.md](./AGENTS.md) for the repository layout and conventions.
 

@@ -22,11 +22,18 @@ verdict block covers the series; each finding names its PR number.
 
 ## Review
 
+Paths below are relative to this skill's directory.
+
 `gh pr diff <number>` gives the change; check the branch out (or open a
-worktree) when callers and tests need reading. Delegate the defect-first pass
-over the diff to a subagent with `$review-agent` on the PR's base..head range
-when delegation is available, otherwise make that pass yourself. Its findings
-feed the block below — do not print them twice.
+worktree) when callers and tests need reading.
+
+Run the pass in [references/review-pass.md](references/review-pass.md) once
+per lens: `regressions`, `silent-failures`, `test-coverage`. When subagents
+are available, spawn one per lens in parallel with a clean context
+(`fork_turns: "none"`), giving each the checkout path, the PR number, the
+base and head refs, its lens, and the absolute path of that reference file
+to follow; otherwise make the three passes yourself. Their findings feed the
+block below — do not print them twice.
 
 Then read past the diff before judging: every caller of a function whose
 signature, return value or behaviour changed — a change breaks code it does
