@@ -17,6 +17,13 @@ codex plugin add base@codex-plugins
 
 Skills are invoked as `$base:<name>`, for example `$base:creating-pr`; Codex also picks the implicit ones up from their descriptions.
 
+The plugin also ships the [serena](https://github.com/oraios/serena) MCP server (symbol-level navigation and editing through a language server, started with `uvx` and `--context=codex`). It pays off in typed codebases and costs startup time everywhere else, so turn it off per repository where it is not needed, in that repository's `.codex/config.toml`:
+
+```toml
+[plugins."base@codex-plugins".mcp_servers.serena]
+enabled = false
+```
+
 Codex refreshes git marketplaces at launch and caches each plugin by version under `~/.codex/plugins/cache/codex-plugins/<plugin>/<version>/`, so bump the patch number of `version` in `plugins/base/.codex-plugin/plugin.json` with every change (`0.2.0` → `0.2.1`); the major and minor numbers do not move.
 
 ## Development
