@@ -58,6 +58,8 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
 
    The viewport is twice the 1280x900 layout because the init script zooms every page 2x: Playwright records at the CSS viewport size and never above it, and this is the one way to film at Retina density. Rects, `scrollY` and `mousemove` / `mousewheel` coordinates come in zoomed px, and media queries see 2560 — a breakpoint above 1280 is a layout the user's window would not show.
 
+   The init script counter-zooms Playwright's annotation host so cursors and highlights stay in viewport coordinates. Chapter cards use `__qa.chapter` instead: their text keeps the page's 2x recording scale. During rehearsal, check a click's cursor and ripple against its target, and read a chapter at playback size before capturing the full run.
+
    A wait the case needs (three minutes idle) is Playwright's clock: `run-code "async page => { await page.clock.install() }"` before that case's `goto`, then `page.clock.fastForward('03:00')` at the wait; a wait the server measures cannot be shortened and goes to the not-checked list. Walk every case with `snapshot`, `find` and `eval`, and write down for each a selector for every target (`eval "el => el.outerHTML" <ref>` shows what to select by — refs are renumbered on every navigation, `e10` becomes `f2e10`), the exact commands, and the `eval` that reads its observable from the DOM. A check reads what the person sees — the same card at the same height — not a number the browser keeps: `scrollY` moved 42 px on a bfcache return while the view stayed put. Done when each case has run once and its check reads the right state — or the failure is understood.
 
 4. Capture from one script. Write the rehearsed commands to `qa.sh` and run it in one shell call, with escalation and a timeout above its run time when the shell tool takes one: a command takes well under a second, so the only pauses on film are the ones written in — the time between separate tool calls would be still video. The script starts with `goto <url>` and `eval "() => __qa.clear()" --raw`, names targets by selector, and takes the states first, then the transitions as one video:
@@ -70,10 +72,10 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
    playwright-cli -s=qa-<pr> screenshot --filename <dir>/<n>-<state>.png
    playwright-cli -s=qa-<pr> eval "() => __qa.show()" --raw
    # the transitions
-   playwright-cli -s=qa-<pr> video-start <dir>/qa.webm --size 2560x1800 --cursor
-   playwright-cli -s=qa-<pr> video-show-actions --duration=800 --point-style="width: 18px; height: 18px; border-radius: 50%; background: rgba(255,90,95,.6)" --highlight-style="outline: 3px solid #ff5a5f; outline-offset: 2px"
+   playwright-cli -s=qa-<pr> video-start <dir>/qa.webm --size 2560x1800
+   playwright-cli -s=qa-<pr> video-show-actions --duration=800
    # per case
-   playwright-cli -s=qa-<pr> video-chapter "<n>. <case>" --description="<expected>" --duration=1500
+   playwright-cli -s=qa-<pr> eval "() => __qa.chapter('<n>. <case>', '<expected>', 1500)" --raw
    playwright-cli -s=qa-<pr> eval "() => __qa.step('ケース <n>: <case>', '<what is done>。期待: <expected>')" --raw
    # ...the rehearsed actions...
    playwright-cli -s=qa-<pr> eval "() => { const s = <read the DOM>; return [__qa.check('<label>', s.rows, 20), __qa.check('<label>', s.more, true)]; }" --raw
@@ -82,7 +84,8 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
    playwright-cli -s=qa-<pr> close
    ```
 
-   A screenshot is the element that holds the state — the app frame, the banner — at the 2x zoom, so it lands at Retina density. `--cursor` draws a pointer travelling to each action point and paces actions so it can; `--point-style` marks the point. `window.__qa` (`scripts/qa-overlay.js`) is a bar the page cannot see — inert, aria-hidden, closed shadow root, absent from snapshots — that survives navigations and draws a ripple wherever the mouse goes down:
+   A screenshot is the element that holds the state — the app frame, the banner — at the 2x zoom, so it lands at Retina density. Enable the pointer option shown by the installed CLI's help (`video-show-actions --cursor=pointer` or `video-start --cursor`); the supported options differ by version. `window.__qa` (`scripts/qa-overlay.js`) is a bar the page cannot see — inert, aria-hidden, closed shadow root, absent from snapshots — that survives navigations and draws a ripple wherever the mouse goes down:
+   - `chapter(title, detail, hold = 1500)` — a centered chapter card; resolves after the card is removed. Its title and description keep the page's recording scale.
    - `step(title, detail, hold = 1200)` — caption; resolves after `hold` ms so the viewer reads it before the action.
    - `check(label, actual, expected)` — writes `✓ label: actual` or `✗ label: actual (expected …)` in the panel and returns `{ pass, actual }`; `expected` is a value, a predicate, or absent for a truthy check.
    - `log(text)` — a plain line. `console.log/info/warn/error` and uncaught errors are mirrored on their own.
@@ -92,10 +95,10 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
 
    ```bash
    ffmpeg -i qa.webm -c:v libx264 -pix_fmt yuv420p -crf 28 -movflags +faststart qa.mp4
-   ffmpeg -i qa.mp4 -vf "fps=1/3,scale=640:-1,tile=4x4" -frames:v 1 sheet.png
+   ffmpeg -i qa.mp4 -vf "fps=1/3,scale=640:-1,tile=4x4" sheet-%02d.png
    ```
 
-   View `sheet.png`. Done when every screenshot shows its state whole, and every chapter card, caption and check line is legible with nothing clipped. GitHub takes 10 MB on a free plan and 100 MB on a paid one (about 6 MB per 75 s at this size): raise `-crf` before cutting cases.
+   View every `sheet-*.png`. Done when every screenshot shows its state whole, every chapter card, caption and check line is legible with nothing clipped, and the cursor and ripple land on the controls being used. GitHub takes 10 MB on a free plan and 100 MB on a paid one (about 6 MB per 75 s at this size): raise `-crf` before cutting cases.
 
 6. Place. Take the current body (`gh pr view <url> --json body --jq .body`) and write the new one as `qa-body.md` in the directory that holds the files; change nothing outside the parts named here. The body decides the layout:
    - A template with `### Test Cases (Human-Verified)` and `## Screenshot(s)`: Human-Verified holds the section below from its first `<details>` through the not-checked list, with the cases as the template's checkboxes, `- [x] <n>. <case>: <observed>`, in place of the table; the evidence goes under `## Screenshot(s)` in the blocks of the section below; in `## Testing Environment(s)` the environment used is ticked, Preview with its URL in parentheses: `- [x] Preview environment (<url>)`. `### Test Cases (AI-Suggested)` is not touched. A section's content runs to the next heading or `---`, and a rerun replaces it. The cases are Human-Verified because the user checks the evidence before asking for review.
@@ -107,7 +110,7 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
    gh pr edit <url> --body-file qa-body.md --attach ./<n>-<state>.png --attach ./qa.mp4
    ```
 
-   Variants of one state sit side by side at one width, which needs HTML gh does not rewrite: after the upload, read the body back and turn those images into `<img width="180" alt="<n> <state>" src="<asset url>" />` in a second `gh pr edit --body-file`. The section reads as the author's own test record, vetted before it is placed: no `[from Codex]` marker and no line naming who ran it.
+   After uploading, read the body back and size every QA screenshot for the PR: keep its captured resolution, but limit its displayed height to 600 CSS pixels with the aspect ratio preserved. For an image of W×H pixels, set the display width to `floor(min(W, 600 * W / H))`; for side-by-side variants, also cap the width at 180. A 772×1800 compact screenshot becomes 257 pixels wide and about 599 high. Use only the `width` attribute and link to the original asset: `<a href="<asset url>"><img width="<display width>" alt="<n> <state>" src="<asset url>" /></a>`. Save this with a second `gh pr edit --body-file`, then verify the embedded dimensions and full-size link. Variants stay on one row under their numbered captions. The section reads as the author's own test record, vetted before it is placed: no `[from Codex]` marker and no line naming who ran it.
 
 7. Clean up — the session (`close`), the local server, the worktree — and report in Japanese: the PR URL, the cases, and what was not covered.
 
