@@ -1,0 +1,6 @@
+interface:
+  display_name: "Recording PR QA"
+  short_description: "Film a PR's manual test and attach the evidence"
+  default_prompt: "Use $recording-pr-qa to run this pull request's manual test and put the evidence in its description."
+policy:
+  allow_implicit_invocation: false

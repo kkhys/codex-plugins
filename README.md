@@ -6,7 +6,7 @@
 
 | Plugin | Description |
 |---|---|
-| `base` | Git and PR workflow: `formatting-commit`, `splitting-commit`, `creating-branch-name`, `publishing-pr`, `creating-pr`, `creating-stacked-pr`, `resolving-merge-conflicts`, `cleaning-workspace`, `illustrating-pr`. Review: `reviewing-pr`, `posting-pr-review`, `reading-unresolved-pr-comments`, `fixing-review-comments`, `resolving-pr-comments`, `babysitting-pr`, `diagnosing-ci-failure`, `merging-renovate-prs`. Working aids: `writing-for-agents`, `diagnosing-bugs`, `digging`, `creating-handoff`, `drafting-message`, `eli15`, `explaining-like-doraemon`. Explicit-only (`$base:<name>`): `publishing-pr`, `illustrating-pr`, `cleaning-workspace`, `diagnosing-bugs`, `digging`, `creating-handoff`, `eli15`, `explaining-like-doraemon` |
+| `base` | Git and PR workflow: `formatting-commit`, `splitting-commit`, `creating-branch-name`, `publishing-pr`, `creating-pr`, `creating-stacked-pr`, `resolving-merge-conflicts`, `cleaning-workspace`, `illustrating-pr`, `recording-pr-qa`. Review: `reviewing-pr`, `posting-pr-review`, `reading-unresolved-pr-comments`, `fixing-review-comments`, `resolving-pr-comments`, `babysitting-pr`, `diagnosing-ci-failure`, `merging-renovate-prs`. Working aids: `writing-for-agents`, `diagnosing-bugs`, `digging`, `creating-handoff`, `drafting-message`, `eli15`, `explaining-like-doraemon`. Explicit-only (`$base:<name>`): `publishing-pr`, `illustrating-pr`, `recording-pr-qa`, `cleaning-workspace`, `diagnosing-bugs`, `digging`, `creating-handoff`, `eli15`, `explaining-like-doraemon` |
 
 ## Installation
 
@@ -35,6 +35,7 @@ find plugins -name '*.sh' -print0 | xargs -0 -r shellcheck
 bash plugins/base/skills/reading-unresolved-pr-comments/scripts/test-read-unresolved-pr-comments.sh
 bash plugins/base/skills/fixing-review-comments/scripts/test-reply-to-review-threads.sh
 bash plugins/base/skills/babysitting-pr/scripts/test-pr-watch.sh
+bash plugins/base/skills/recording-pr-qa/scripts/test-qa-overlay.sh
 ```
 
 The same checks run in CI via `.github/workflows/validate.yml`.
