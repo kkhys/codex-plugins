@@ -1,6 +1,6 @@
 ---
 name: recording-pr-qa
-description: 'Run a PR''s manual test in headless Chrome through playwright-cli, capture each case as a screenshot or a captioned video with an in-video console, and place the evidence with the case list in the PR description, in the repository''s template sections when it has them. Explicit workflow, invoked as $recording-pr-qa; one picture of the change is illustrating-pr.'
+description: 'Run a PR''s manual test in headless Chrome through playwright-cli, capture each case as a screenshot or a captioned video with an in-video console, and place the evidence with the case list in the PR description, in the repository''s template sections when it has them, or in the user''s pending review on a PR they review. Explicit workflow, invoked as $recording-pr-qa; one picture of the change is illustrating-pr.'
 ---
 
 # Recording PR QA
@@ -11,7 +11,7 @@ Do the PR's manual test the way a reviewer would, in a headless browser, and lea
 
 ## PR context
 
-The PR named in the request (number or URL) wins over the current branch's PR. Run first: `gh pr view <pr> --json number,url,title,state,isDraft,mergedAt,headRefName,headRefOid,baseRefName`. `--url <base URL>` in the request names the environment and skips the choice in step 2; `--post` posts the report without the confirmation in step 6. The CLI is `playwright-cli` on PATH; without it, a project that depends on playwright carries the same CLI as `npx --no-install playwright cli`. The scratch directory is `mktemp -d`: outside the repository, and writable from the sandbox.
+The PR named in the request (number or URL) wins over the current branch's PR. Run first: `gh pr view <pr> --json number,url,title,state,isDraft,mergedAt,headRefName,headRefOid,baseRefName,author`, and `gh api user --jq .login` for the viewer. `--url <base URL>` in the request names the environment and skips the choice in step 2; `--review`, or an `author.login` other than the viewer, places the report in the user's pending review instead of the PR body (step 6); `--post` posts the report without the confirmation in step 6. The CLI is `playwright-cli` on PATH; without it, a project that depends on playwright carries the same CLI as `npx --no-install playwright cli`. The scratch directory is `mktemp -d`: outside the repository, and writable from the sandbox.
 
 ## Steps
 
@@ -100,7 +100,9 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
 
    View every `sheet-*.png`. Done when every screenshot shows its state whole, every chapter card, caption and check line is legible with nothing clipped, and the cursor and ripple land on the controls being used. GitHub takes 10 MB on a free plan and 100 MB on a paid one (about 6 MB per 75 s at this size): raise `-crf` before cutting cases.
 
-6. Place. Take the current body (`gh pr view <url> --json body --jq .body`) and write the new one as `qa-body.md` in the directory that holds the files; change nothing outside the parts named here. The body decides the layout:
+6. Place. The PR decides where: the user's own PR carries the report in its body; a PR the user reviews (`--review`, or an `author.login` other than the viewer) carries it in the user's pending review, where the reviewer's evidence and verdict are read together and the author's body stays theirs. Either way the report reads as the user's own test record, vetted before it is placed: no `[from Codex]` marker and no line naming who ran it.
+
+   In the body: take the current one (`gh pr view <url> --json body --jq .body`) and write the new one as `qa-body.md` in the directory that holds the files; change nothing outside the parts named here. The body decides the layout:
    - A template with `### Test Cases (Human-Verified)` and `## Screenshot(s)`: Human-Verified holds the section below from its first `<details>` through the not-checked list, with the cases as the template's checkboxes, `- [x] <n>. <case>: <observed>`, in place of the table; the evidence goes under `## Screenshot(s)` in the blocks of the section below; in `## Testing Environment(s)` the environment used is ticked, Preview with its URL in parentheses: `- [x] Preview environment (<url>)`. `### Test Cases (AI-Suggested)` is not touched. A section's content runs to the next heading or `---`, and a rerun replaces it. The cases are Human-Verified because the user checks the evidence before asking for review.
    - Otherwise the `## Manual QA` section below: replaced if an earlier run left one, appended after the author's text if not.
 
@@ -110,9 +112,17 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
    gh pr edit <url> --body-file qa-body.md --attach ./<n>-<state>.png --attach ./qa.mp4
    ```
 
-   After uploading, read the body back and size every QA screenshot for the PR: keep its captured resolution, but limit its displayed height to 600 CSS pixels with the aspect ratio preserved. For an image of W×H pixels, set the display width to `floor(min(W, 600 * W / H))`; for side-by-side variants, also cap the width at 180. A 772×1800 compact screenshot becomes 257 pixels wide and about 599 high. Use only the `width` attribute and link to the original asset: `<a href="<asset url>"><img width="<display width>" alt="<n> <state>" src="<asset url>" /></a>`. Save this with a second `gh pr edit --body-file`, then verify the embedded dimensions and full-size link. Variants stay on one row under their numbered captions. The section reads as the author's own test record, vetted before it is placed: no `[from Codex]` marker and no line naming who ran it.
+   After uploading, read the body back and size every QA screenshot for the PR: keep its captured resolution, but limit its displayed height to 600 CSS pixels with the aspect ratio preserved. For an image of W×H pixels, set the display width to `floor(min(W, 600 * W / H))`; for side-by-side variants, also cap the width at 180. A 772×1800 compact screenshot becomes 257 pixels wide and about 599 high. Use only the `width` attribute and link to the original asset: `<a href="<asset url>"><img width="<display width>" alt="<n> <state>" src="<asset url>" /></a>`. Save this with a second `gh pr edit --body-file`, then verify the embedded dimensions and full-size link. Variants stay on one row under their numbered captions.
 
-7. Clean up — the session (`close`), the local server, the worktree — and report in Japanese: the PR URL, the cases, and what was not covered.
+   In the review: write the `## Manual QA` section below as `qa-body.md` in the directory that holds the files, with the same references, except that every screenshot is written sized straight away, by the rule above with the local path in both places — `<a href="./<n>-<state>.png"><img width="<display width>" alt="<n> <state>" src="./<n>-<state>.png" /></a>` — since no second edit follows the upload. Show the draft, the images and the sheet, and wait for the user's yes as for the body. On the yes, or with `--post`, run from that directory, with escalation when sandboxed — the script uploads and writes through `gh`:
+
+   ```bash
+   bash <absolute path of scripts/place-qa-review.sh> <url> qa-body.md ./<n>-<state>.png ./qa.mp4
+   ```
+
+   `gh pr review` has no `--attach`, so the script uploads the files to the repository itself (push access is required), rewrites every reference — `(./file)` and `"./file"` — the way `gh pr edit` does, and writes the section into the user's pending review: the one `posting-pr-review` left, its earlier `## Manual QA` replaced, or a new one. The review stays pending; the user reads it on GitHub and submits it with their verdict.
+
+7. Clean up — the session (`close`), the local server, the worktree — and report in Japanese: the PR URL, the cases, what was not covered, and, for a review, that it stays pending until the user submits it.
 
 ## Section format
 

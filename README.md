@@ -36,6 +36,7 @@ bash plugins/base/skills/reading-unresolved-pr-comments/scripts/test-read-unreso
 bash plugins/base/skills/fixing-review-comments/scripts/test-reply-to-review-threads.sh
 bash plugins/base/skills/babysitting-pr/scripts/test-pr-watch.sh
 bash plugins/base/skills/recording-pr-qa/scripts/test-qa-overlay.sh
+bash plugins/base/skills/recording-pr-qa/scripts/test-place-qa-review.sh
 ```
 
 The same checks run in CI via `.github/workflows/validate.yml`.
