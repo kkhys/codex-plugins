@@ -26,14 +26,14 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
    A login the cases need is the user's own. The state file is `${XDG_STATE_HOME:-$HOME/.local/state}/recording-pr-qa/<host>.json`; when it is missing, or a load lands on the login page, sign in once in a headed window. The directory and the `chmod` are outside the sandbox's writable roots, so the whole block runs with escalation:
 
    ```bash
-   mkdir -p "$(dirname <state file>)"
+   mkdir -p -m 700 <state file's directory>
    playwright-cli -s=qa-login open --headed --browser=chrome <login url>
    # the user signs in — ID and password, or Google SSO — and says so
    playwright-cli -s=qa-login state-save <state file> && chmod 600 <state file>
    playwright-cli -s=qa-login close
    ```
 
-   The file carries the session cookie: it stays in that directory, never in a repository. Google may refuse to sign in to a browser under automation; the ID and password form is the sure path.
+   The file carries the session cookie: it stays in that directory, never in a repository. `-m 700` keeps the directory private: `state-save` would create it with the default mode, and writes the file with the default mode before the `chmod`. Google may refuse to sign in to a browser under automation; the ID and password form is the sure path.
 
 3. Rehearse without recording. One named session, kept to the end, opened with a config written to the scratch directory. `initScript` takes the absolute path of this skill's `scripts/qa-overlay.js` — the skill listing shows where `SKILL.md` lives:
 
@@ -62,7 +62,7 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
 
    A wait the case needs (three minutes idle) is Playwright's clock: `run-code "async page => { await page.clock.install() }"` before that case's `goto`, then `page.clock.fastForward('03:00')` at the wait; a wait the server measures cannot be shortened and goes to the not-checked list. Walk every case with `snapshot`, `find` and `eval`, and write down for each a selector for every target (`eval "el => el.outerHTML" <ref>` shows what to select by — refs are renumbered on every navigation, `e10` becomes `f2e10`), the exact commands, and the `eval` that reads its observable from the DOM. A check reads what the person sees — the same card at the same height — not a number the browser keeps: `scrollY` moved 42 px on a bfcache return while the view stayed put. Done when each case has run once and its check reads the right state — or the failure is understood.
 
-4. Capture from one script. Write the rehearsed commands to `qa.sh` and run it in one shell call, with escalation and a timeout above its run time when the shell tool takes one: a command takes well under a second, so the only pauses on film are the ones written in — the time between separate tool calls would be still video. The script starts with `goto <url>` and `eval "() => __qa.clear()" --raw`, names targets by selector, and takes the states first, then the transitions as one video:
+4. Capture from one script. Write the rehearsed commands to `qa.sh` and run it in one shell call, with escalation and a timeout above its run time, its holds plus about a second per command, when the shell tool takes one: a command takes well under a second, so the only pauses on film are the ones written in — the time between separate tool calls would be still video. The script starts with `goto <url>` and `eval "() => __qa.clear()" --raw`, names targets by selector, and takes the states first, then the transitions as one video:
 
    ```bash
    # a state: the element that holds it, so the bar stays out of frame
@@ -112,7 +112,7 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
    gh pr edit <url> --body-file qa-body.md --attach ./<n>-<state>.png --attach ./qa.mp4
    ```
 
-   After uploading, read the body back and size every QA screenshot for the PR: keep its captured resolution, but limit its displayed height to 600 CSS pixels with the aspect ratio preserved. For an image of W×H pixels, set the display width to `floor(min(W, 600 * W / H))`; for side-by-side variants, also cap the width at 180. A 772×1800 compact screenshot becomes 257 pixels wide and about 599 high. Use only the `width` attribute and link to the original asset: `<a href="<asset url>"><img width="<display width>" alt="<n> <state>" src="<asset url>" /></a>`. Save this with a second `gh pr edit --body-file`, then verify the embedded dimensions and full-size link. Variants stay on one row under their numbered captions.
+   Every QA screenshot keeps its captured resolution but shows at most 600 CSS pixels high, aspect ratio kept, and links to the original. For an image of W×H pixels the display width is `floor(min(W, 600 * W / H))`; side-by-side variants also cap it at 180. A 772×1800 compact screenshot becomes 257 pixels wide and about 599 high. That takes HTML gh does not rewrite: after the upload, read the body back, turn each image into `<a href="<asset url>"><img width="<display width>" alt="<n> <state>" src="<asset url>" /></a>` — `width` only — in a second `gh pr edit --body-file`, then check the widths and the full-size links in the body. Variants stay on one row under their numbered captions.
 
    In the review: write the `## Manual QA` section below as `qa-body.md` in the directory that holds the files, with the same references, except that every screenshot is written sized straight away, by the rule above with the local path in both places — `<a href="./<n>-<state>.png"><img width="<display width>" alt="<n> <state>" src="./<n>-<state>.png" /></a>` — since no second edit follows the upload. Show the draft, the images and the sheet, and wait for the user's yes as for the body. On the yes, or with `--post`, run from that directory, with escalation when sandboxed — the script uploads and writes through `gh`:
 
@@ -120,7 +120,7 @@ The PR named in the request (number or URL) wins over the current branch's PR. R
    bash <absolute path of scripts/place-qa-review.sh> <url> qa-body.md ./<n>-<state>.png ./qa.mp4
    ```
 
-   `gh pr review` has no `--attach`, so the script uploads the files to the repository itself (push access is required), rewrites every reference — `(./file)` and `"./file"` — the way `gh pr edit` does, and writes the section into the user's pending review: the one `posting-pr-review` left, its earlier `## Manual QA` replaced, or a new one. The review stays pending; the user reads it on GitHub and submits it with their verdict.
+   `gh pr review` has no `--attach`, so the script uploads the files to the repository itself (push access is required), rewrites each `(./file)` and each quoted `"./file"` — the `src` and `href` above, which `gh pr edit` would leave alone — to its asset URL, and writes the section into the user's pending review: the one `posting-pr-review` left, its earlier `## Manual QA` replaced, or a new one. The review stays pending; the user reads it on GitHub and submits it with their verdict.
 
 7. Clean up — the session (`close`), the local server, the worktree — and report in Japanese: the PR URL, the cases, what was not covered, and, for a review, that it stays pending until the user submits it.
 

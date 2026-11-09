@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Personal development workflow for Codex: commit and PR conventions, stacked PRs, PR review and babysitting, CI diagnosis, Renovate merging, PR QA recording, writing and explaining aids, and the serena MCP server",
   "mcpServers": "./.mcp.json",
   "interface": {
