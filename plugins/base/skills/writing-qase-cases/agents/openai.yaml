@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Qase Cases"
+  short_description: "What a Qase test case holds, and its parameters"
+  default_prompt: "Use $writing-qase-cases to draft a Qase test case for this behaviour."
