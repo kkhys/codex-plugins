@@ -1,0 +1,6 @@
+interface:
+  display_name: "Recording Qase QA"
+  short_description: "Film a PR's Qase cases into the QA run"
+  default_prompt: "Use $recording-qase-qa to run this pull request's manual test against its Qase cases and record the results in the QA run."
+policy:
+  allow_implicit_invocation: false

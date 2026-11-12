@@ -6,7 +6,7 @@
 
 | Plugin | Description |
 |---|---|
-| `base` | Git and PR workflow: `formatting-commit`, `splitting-commit`, `creating-branch-name`, `publishing-pr`, `creating-pr`, `creating-stacked-pr`, `resolving-merge-conflicts`, `cleaning-workspace`, `illustrating-pr`, `recording-pr-qa`. Review: `reviewing-pr`, `posting-pr-review`, `reading-unresolved-pr-comments`, `fixing-review-comments`, `resolving-pr-comments`, `babysitting-pr`, `diagnosing-ci-failure`, `merging-renovate-prs`. Working aids: `writing-for-agents`, `diagnosing-bugs`, `digging`, `creating-handoff`, `drafting-message`, `eli15`, `explaining-like-doraemon`. Explicit-only (`$base:<name>`): `publishing-pr`, `illustrating-pr`, `recording-pr-qa`, `cleaning-workspace`, `diagnosing-bugs`, `digging`, `creating-handoff`, `eli15`, `explaining-like-doraemon` |
+| `base` | Git and PR workflow: `formatting-commit`, `splitting-commit`, `creating-branch-name`, `publishing-pr`, `creating-pr`, `creating-stacked-pr`, `resolving-merge-conflicts`, `cleaning-workspace`, `illustrating-pr`, `recording-pr-qa`, `recording-qase-qa`. Review: `reviewing-pr`, `posting-pr-review`, `reading-unresolved-pr-comments`, `fixing-review-comments`, `resolving-pr-comments`, `babysitting-pr`, `diagnosing-ci-failure`, `merging-renovate-prs`. Working aids: `writing-for-agents`, `writing-qase-cases`, `diagnosing-bugs`, `digging`, `creating-handoff`, `drafting-message`, `eli15`, `explaining-like-doraemon`. Explicit-only (`$base:<name>`): `publishing-pr`, `illustrating-pr`, `recording-pr-qa`, `recording-qase-qa`, `cleaning-workspace`, `diagnosing-bugs`, `digging`, `creating-handoff`, `eli15`, `explaining-like-doraemon` |
 
 ## Installation
 
@@ -37,6 +37,8 @@ bash plugins/base/skills/fixing-review-comments/scripts/test-reply-to-review-thr
 bash plugins/base/skills/babysitting-pr/scripts/test-pr-watch.sh
 bash plugins/base/skills/recording-pr-qa/scripts/test-qa-overlay.sh
 bash plugins/base/skills/recording-pr-qa/scripts/test-place-qa-review.sh
+bash plugins/base/skills/recording-qase-qa/scripts/test-qase-api.sh
+bash plugins/base/skills/recording-qase-qa/scripts/test-cut-case-clips.sh
 ```
 
 The same checks run in CI via `.github/workflows/validate.yml`.
